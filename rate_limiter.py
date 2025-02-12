@@ -23,11 +23,14 @@ def refiller(token_bucket: TokenBucket, lock: multiprocessing.Lock, process_name
 
 
 @app.command()
-def run(max_time: Annotated[int, typer.Argument(help="Maximum number of time in seconds to run the simulation")],
-        max_requests: Annotated[int, typer.Argument(help="Maximum number of random requests to perform during simulation")]):
+def run(max_time: Annotated[int, typer.Argument(help="Maximum number of time in seconds to run the simulation.")],
+        max_requests: Annotated[int, typer.Argument(help="Maximum number of random requests to perform during simulation.")],
+        token_count: Annotated[int, typer.Argument(help="Bucket size represented by maximum amount of tokens.")],
+        refill_rate: Annotated[int, typer.Argument(help="Refill rate of tokens/second added to the bucket.")]):
+
     """Simulates performing requests against a rate limiting middleware using token bucket algorithm. Simulation runs until MAX_TIME elapses or MAX_REQUESTS are performed."""
     with multiprocessing.Manager() as manager:
-        shared_token_bucket = TokenBucket(6, 1, manager)
+        shared_token_bucket = TokenBucket(bucket_size=token_count, refill_rate=refill_rate, manager=manager)
         shared_lock = multiprocessing.Lock()
         shared_event = multiprocessing.Event()
         process1 = multiprocessing.Process(target=refiller,
@@ -39,7 +42,7 @@ def run(max_time: Annotated[int, typer.Argument(help="Maximum number of time in 
 
         while time.time() - start_time < max_time and request1.statistics["total"] < max_requests:
             request1.make(shared_token_bucket)
-            time.sleep(random.randint(1, 5))
+            time.sleep(random.randint(1, 3))
 
         elapsed = time.time() - start_time
         shared_event.set()
