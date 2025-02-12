@@ -1,3 +1,4 @@
+
 # Rate Limiter
 This repository contains an example simulator of rate-limiting middleware implemented using the token bucket algorithm. Rate limiting is a technique used to control the rate at which requests are processed, ensuring system stability and preventing abuse.
 
@@ -5,6 +6,8 @@ This repository contains an example simulator of rate-limiting middleware implem
 **Token Bucket Algorithm:** Efficiently manages request rates by allowing bursts of traffic up to a defined limit while maintaining a steady flow over time.
 
 **Simulation Environment:** Provides a framework to simulate and test the behavior of the rate limiter under various conditions.
+
+<img src="https://github.com/user-attachments/assets/69ea397c-3794-407f-a7db-8aa892aa98b5" width="30%">
 
 ## Getting Started
 ### Prerequisites
