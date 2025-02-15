@@ -7,16 +7,17 @@ class TokenBucket:
     """
     Token bucket represents a bucket of MAX tokens refiled with X tokens every second
     """
-    def __init__(self, bucket_size: int, refill_rate: int, manager: multiprocessing.Manager):
+    def __init__(self, bucket_size: int, refill_amount: int, refill_interval: int, manager: multiprocessing.Manager):
         self.bucket_size = bucket_size
-        self.refill_rate = refill_rate
+        self.refill_amount = refill_amount
+        self.refill_interval = refill_interval
         self.tokens = manager.list(["*" for token in range(self.bucket_size)])
         self.refill_time = time.time()
 
     def refill(self, process_name: str) -> None:
-        if time.time() - self.refill_time > 5:
+        if time.time() - self.refill_time > self.refill_interval:
             self.refill_time = time.time()
-            for token in range(self.refill_rate):
+            for token in range(self.refill_amount):
                 if not len(self.tokens) >= self.bucket_size:
                     self.tokens.append("*")
                     logging.info(f"[{process_name}] Adding 1 token to the bucket")
