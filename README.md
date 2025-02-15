@@ -1,3 +1,4 @@
+[![Build and Test](https://github.com/bartkorn/rate-limiter/actions/workflows/python-app.yml/badge.svg)](https://github.com/bartkorn/rate-limiter/actions/workflows/python-app.yml)
 
 # Rate Limiter
 This repository contains an example simulator of rate-limiting middleware implemented using the token bucket algorithm. Rate limiting is a technique used to control the rate at which requests are processed, ensuring system stability and preventing abuse.
