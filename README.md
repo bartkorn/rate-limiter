@@ -17,7 +17,7 @@ Python 3.x
 Clone the Repository:
 ```bash
 git clone https://github.com/bartkorn/rate-limiter.git
-cd rate-limiter
+cd rate_limiter
 ```
 
 Install Dependencies:
